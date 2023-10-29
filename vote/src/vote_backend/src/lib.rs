@@ -66,6 +66,16 @@ thread_local! {
     );
 }
 
+#[ic_cdk_macros::query]
+fn get_proposal(key: u64) -> Option<Proposal> {
+    PROPOSAL_MAP.with(|p| p.borrow().get(&key))
+}
+
+#[ic_cdk_macros::query]
+fn get_proposal_count() -> u64 {
+    PROPOSAL_MAP.with(|p| p.borrow().len())
+}
+
 #[ic_cdk_macros::update]
 fn create_proposal(key: u64, proposal: CreateProposal) -> Option<Proposal> {
     let value = Proposal {
